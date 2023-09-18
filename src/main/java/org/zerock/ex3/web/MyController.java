@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MyController {
 
     @GetMapping("/main")
-    public void main(){
-        log.info("---------------------------main");
+    public void main() {
+        log.info("-------------------main");
     }
 }
