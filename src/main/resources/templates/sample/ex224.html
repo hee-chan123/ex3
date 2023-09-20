@@ -5,6 +5,10 @@
     <title>Title</title>
 </head>
 <body>
-<h1 th:text="${'Hello World'}"></h1>
+<ul>
+    <li th:each="dto, state:${list}">
+        <span th:if="${dto.sno % 5 == 0}" th:text="${'-------------'+dto.sno}"></span>
+    </li>
+</ul>
 </body>
 </html>
