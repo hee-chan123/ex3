@@ -1,5 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content} )}">
+    <th:block th:fragment="content">
 <head>
     <title>top page</title>
     <meta http-equiv="Content-Type"
@@ -30,7 +32,7 @@
 </table>
 <hr/>
 <table>
-    <tr><th>ID</th><th>이름</th></tr>
+    <tr><th>ID</th><th>수정1</th><th>수정2</th><th>이름</th><th>삭제</th></tr>
     <tr th:each="obj : ${datalist}">
         <td th:text="${obj.id}"></td>
         <td><a th:href="@{/edit/{id}(id=${obj.id})}">[[${obj.id}]]</a></td>
@@ -40,4 +42,6 @@
     </tr>
 </table>
 </body>
+    </th:block>
+</th:block>
 </html>
