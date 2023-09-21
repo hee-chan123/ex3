@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.zerock.ex3.entity.MyData;
 import org.zerock.ex3.repositoty.MyDataRepository;
+import org.zerock.ex3.repositoty.MyEm;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -15,6 +16,9 @@ import java.util.Optional;
 
 @Controller
 public class HeloController {
+
+    @Autowired
+    MyEm myEm;
 
     @Autowired
     MyDataRepository repository;
@@ -25,7 +29,8 @@ public class HeloController {
             ModelAndView mav) {
         mav.setViewName("index");
         mav.addObject("msg","this is sample content.");
-        Iterable<MyData> list = repository.findAll();
+//        Iterable<MyData> list = repository.findAll();
+        List<MyData> list = myEm.findAll();
         mav.addObject("datalist",list);
         return mav;
     }
@@ -35,7 +40,8 @@ public class HeloController {
     public ModelAndView form(
             @ModelAttribute("formModel") MyData mydata,
             ModelAndView mav) {
-        repository.saveAndFlush(mydata);
+//        repository.saveAndFlush(mydata);
+        myEm.insert(mydata);
         return new ModelAndView("redirect:/");
     }
 
@@ -63,11 +69,13 @@ public class HeloController {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public ModelAndView edit(@ModelAttribute MyData mydata,
-                             @PathVariable int id, ModelAndView mav) {
+                             @PathVariable Long id, ModelAndView mav) {
         mav.setViewName("edit");
         mav.addObject("title","edit mydata.");
-        Optional<MyData> data = repository.findById((long)id);
-        mav.addObject("formModel",data.get());
+//        Optional<MyData> data = repository.findById((long)id);
+//        mav.addObject("formModel",data.get());
+        MyData data = myEm.findById(id);
+        mav.addObject("formModel", data);
         return mav;
     }
 
@@ -83,12 +91,13 @@ public class HeloController {
     @Transactional(readOnly=false)
     public ModelAndView update(@ModelAttribute MyData mydata,
                                ModelAndView mav) {
-        repository.saveAndFlush(mydata);
+//        repository.saveAndFlush(mydata);
+        myEm.update(mydata);
         return new ModelAndView("redirect:/");
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public ModelAndView delete(@PathVariable int id,
+    public ModelAndView delete(@PathVariable long id,
                                ModelAndView mav) {
         mav.setViewName("delete");
         mav.addObject("title","delete mydata.");
@@ -101,7 +110,9 @@ public class HeloController {
     @Transactional(readOnly=false)
     public ModelAndView remove(@RequestParam long id,
                                ModelAndView mav) {
-        repository.deleteById(id);
+
+//        repository.deleteById(id);
+        myEm.deleteById(id);
         return new ModelAndView("redirect:/");
     }
 }

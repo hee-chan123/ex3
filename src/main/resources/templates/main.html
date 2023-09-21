@@ -11,11 +11,17 @@
     <p> Banana </p>
     <p> Orange </p>
 </div>
+
+<div id="box">
+    <style>{color: blue}</style>
+    <p>Hi there!</p>
+    <span style="display: none">hidden message</span>
+</div>
 <script>
     const fruits = document.querySelectorAll(".fruits p");
     const fruitArray = Array.from(fruits);
     console.log(fruitArray);
-    const fruitNames = fruitArray.map(fruit => fruit.textContent);
+    const fruitNames = fruitArray.map(fruit => fruit.innerHTML);
     console.log(fruitNames);
 </script>
 </body>
