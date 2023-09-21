@@ -32,4 +32,7 @@ public interface MyDataRepository  extends JpaRepository<MyData, Long> {
     @Query(value = "select m.id, m.name, m.mail, m.memo, current_date from MyData m where m.id > :id", countQuery = "select count(m) from MyData m where m.id > :id")
     Page<Object[]> getListWithQueryObject(Long id, Pageable pageable);
 
+    @Query(value = "select * from mydata where id > 0", nativeQuery = true)
+    List<Object[]> getNativeResult();
+
 }
